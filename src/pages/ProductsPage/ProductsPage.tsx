@@ -1,6 +1,85 @@
 import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import CardItem from "../../components/CardItem/CardItem";
+import CardItemIcons from "../../components/CardItemIcons/CardItemIcons";
 
-const ProductsPage: React.FC = () => {
+const ProductsPage: React.FC<{ products: Products[] | null }> = ({
+  products,
+}) => {
+  const [isIconsMode, setIsIconsMode] = useState<boolean>(true);
+
+  const [sortedProducts, setSortedProducts] = useState<Products[] | null>(() =>
+    products ? products.sort((a, b) => a.price - b.price) : []
+  );
+  const [sortByDirection, setSortByDirection] =
+    useState<string>("price-lowest");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchedProducts, setSearchedProducts] = useState<Products[] | null>(
+    sortedProducts
+  );
+
+  const selectRef = useRef<HTMLSelectElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (sortByDirection === "price-lowest" && products) {
+      const sProducts = products.sort((a, b) => a.price - b.price);
+      setSortedProducts(sProducts);
+    } else if (sortByDirection === "price-highest" && products) {
+      const sProducts = products.sort((a, b) => b.price - a.price);
+      setSortedProducts(sProducts);
+    }
+  }, [sortByDirection, products]);
+
+  useEffect(() => {
+    if (searchRef && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchValue === "") {
+      setSearchedProducts(sortedProducts);
+    } else {
+      const sProducts = sortedProducts?.filter((item) =>
+        item.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      if (sProducts) {
+        setSearchedProducts(sProducts);
+      }
+    }
+  }, [searchValue, sortedProducts]);
+
+  const sortByDirectionHandler: selectHandler = () => {
+    if (selectRef && selectRef.current) {
+      setSortByDirection(selectRef.current.value);
+    }
+  };
+
+  const searchHandler = () => {
+    if (searchRef && searchRef.current) {
+      setSearchValue(searchRef.current.value);
+    }
+  };
+
+  const productsList = searchedProducts?.map((product) => (
+    <CardItem
+      key={product.id}
+      name={product.name}
+      price={product.price}
+      imageUrl={product.imagesUrl[0]}
+    />
+  ));
+
+  const productsIcons = searchedProducts?.map((product) => (
+    <CardItemIcons
+      key={product.id}
+      name={product.name}
+      price={product.price}
+      imageUrl={product.imagesUrl[0]}
+    />
+  ));
+
   return (
     <>
       <section className="navigation">
@@ -23,6 +102,10 @@ const ProductsPage: React.FC = () => {
                       name="search"
                       placeholder="Search"
                       className="filters__search"
+                      autoComplete="off"
+                      value={searchValue}
+                      ref={searchRef}
+                      onChange={searchHandler}
                     />
                   </div>
 
@@ -68,14 +151,14 @@ const ProductsPage: React.FC = () => {
                       name="category"
                       className="filters__category"
                     >
-                      Cuts & Sprouts
+                      Nuts
                     </button>
                     <button
                       type="button"
                       name="category"
                       className="filters__category"
                     >
-                      Organic
+                      Exotic
                     </button>
                   </div>
 
@@ -171,20 +254,35 @@ const ProductsPage: React.FC = () => {
             <section className="catalog">
               <div className="catalog__panel">
                 <div className="catalog__mode">
-                  <div className="grid__mode active">
+                  <div
+                    className={`grid__mode ${isIconsMode ? "active" : ""}`}
+                    onClick={() => setIsIconsMode(true)}
+                  >
                     <i className="material-icons">apps</i>
                   </div>
-                  <div className="list__mode">
+                  <div
+                    className={`list__mode ${!isIconsMode ? "active" : ""}`}
+                    onClick={() => setIsIconsMode(false)}
+                  >
                     <i className="material-icons">list</i>
                   </div>
                 </div>
-                <p className="catalog__info">23 Products Found</p>
+                <p className="catalog__info">
+                  {searchedProducts?.length} Products Found
+                </p>
                 <div className="catalog__line"></div>
                 <form className="catalog__sort">
                   <label htmlFor="sortby" className="catalog__label">
                     Sort By
                   </label>
-                  <select name="sortby" id="sortby" className="catalog__select">
+                  <select
+                    name="sortby"
+                    id="sortby"
+                    className="catalog__select"
+                    value={sortByDirection}
+                    onChange={sortByDirectionHandler}
+                    ref={selectRef}
+                  >
                     <option value="price-lowest">price (lowest)</option>
                     <option value="price-highest">price (highest)</option>
                     <option value="name-a">name (a - z)</option>
@@ -192,157 +290,12 @@ const ProductsPage: React.FC = () => {
                   </select>
                 </form>
               </div>
-              <div className="cards__list list active">
-                <div className="card__item">
-                  <div className="card__img">
-                    <div className="overlay">
-                      <Link to="/productsItem" className="show__more">
-                        <svg
-                          stroke="#fff"
-                          fill="#fff"
-                          strokeWidth="0"
-                          viewBox="0 0 512 512"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-                        </svg>
-                      </Link>
-                    </div>
-                    <img
-                      src="https://images.unsplash.com/photo-1604238401172-a5c5f8d044ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-                      alt="fruit"
-                    />
-                  </div>
-                  <div className="card__description">
-                    <p className="card__title">Bananas</p>
-                    <p className="card__price">$599.99</p>
-                  </div>
-                </div>
 
-                <div className="card__item">
-                  <div className="card__img">
-                    <div className="overlay">
-                      <Link to="/productsItem" className="show__more">
-                        <svg
-                          stroke="#fff"
-                          fill="#fff"
-                          strokeWidth="0"
-                          viewBox="0 0 512 512"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-                        </svg>
-                      </Link>
-                    </div>
-                    <img
-                      src="https://images.unsplash.com/photo-1604238401172-a5c5f8d044ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-                      alt="fruit"
-                    />
-                  </div>
-                  <div className="card__description">
-                    <p className="card__title">Bananas</p>
-                    <p className="card__price">$599.99</p>
-                  </div>
-                </div>
-
-                <div className="card__item">
-                  <div className="card__img">
-                    <div className="overlay">
-                      <Link to="/productsItem" className="show__more">
-                        <svg
-                          stroke="#fff"
-                          fill="#fff"
-                          strokeWidth="0"
-                          viewBox="0 0 512 512"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-                        </svg>
-                      </Link>
-                    </div>
-                    <img
-                      src="https://images.unsplash.com/photo-1604238401172-a5c5f8d044ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-                      alt="fruit"
-                    />
-                  </div>
-                  <div className="card__description">
-                    <p className="card__title">Bananas</p>
-                    <p className="card__price">$599.99</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="cards__list icons">
-                <div className="card__item">
-                  <div className="card__img">
-                    <img
-                      src="https://images.unsplash.com/photo-1604238401172-a5c5f8d044ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-                      alt="fruit"
-                    />
-                  </div>
-                  <div className="card__description">
-                    <p className="card__title">Bananas</p>
-                    <p className="card__price">$599.99</p>
-                    <p className="card__text">
-                      Fruits and vegetables are low in fat, salt and sugar. They
-                      are a good source of dietary fibre. As part of a
-                      well-balanced, regular diet and a healthy, active
-                      lifestyle.
-                    </p>
-                    <Link className="card__details" to="/productsItem">
-                      Details
-                    </Link>
-                  </div>
-                </div>
-                <div className="card__item">
-                  <div className="card__img">
-                    <img
-                      src="https://images.unsplash.com/photo-1604238401172-a5c5f8d044ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-                      alt="fruit"
-                    />
-                  </div>
-                  <div className="card__description">
-                    <p className="card__title">Bananas</p>
-                    <p className="card__price">$599.99</p>
-                    <p className="card__text">
-                      Fruits and vegetables are low in fat, salt and sugar. They
-                      are a good source of dietary fibre. As part of a
-                      well-balanced, regular diet and a healthy, active
-                      lifestyle.
-                    </p>
-                    <Link className="card__details" to="/productsItem">
-                      Details
-                    </Link>
-                  </div>
-                </div>
-                <div className="card__item">
-                  <div className="card__img">
-                    <img
-                      src="https://images.unsplash.com/photo-1604238401172-a5c5f8d044ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-                      alt="fruit"
-                    />
-                  </div>
-                  <div className="card__description">
-                    <p className="card__title">Bananas</p>
-                    <p className="card__price">$599.99</p>
-                    <p className="card__text">
-                      Fruits and vegetables are low in fat, salt and sugar. They
-                      are a good source of dietary fibre. As part of a
-                      well-balanced, regular diet and a healthy, active
-                      lifestyle.
-                    </p>
-                    <Link className="card__details" to="/productsItem">
-                      Details
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              {isIconsMode ? (
+                <div className="cards__list list">{productsList}</div>
+              ) : (
+                <div className="cards__list icons">{productsIcons}</div>
+              )}
             </section>
           </div>
         </div>

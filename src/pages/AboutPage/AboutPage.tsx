@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+
 const AboutPage: React.FC = () => {
   return (
     <>
       <section className="navigation">
         <div className="container">
           <h2 className="navigation__link">
-            <a href="/index.html">Home</a>
+            <Link to="/">Home</Link>
             <span>/</span>About
           </h2>
         </div>

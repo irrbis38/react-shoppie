@@ -7,13 +7,16 @@ import FavoritesPage from "./../../pages/FavoritesPage/FavoritesPage";
 import LoginPage from "./../../pages/LoginPage/LoginPage";
 import ProductsItemPage from "../../pages/ProductsItemPage/ProductsItemPage";
 
-const Main: React.FC = () => {
+const Main: React.FC<{ products: Products[] | null }> = ({ products }) => {
   return (
     <main className="main">
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage products={products} />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/products" element={<ProductsPage />} />
+        <Route
+          path="/products"
+          element={<ProductsPage products={products} />}
+        />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/login" element={<LoginPage />} />
