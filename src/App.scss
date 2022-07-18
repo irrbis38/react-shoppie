@@ -16,8 +16,8 @@ $dark: #1f1e1d;
 $red_bright: #ff160c;
 
 //fonts
-$font_main: 'Lato', sans-serif;
-$font_logo: 'Permanent Marker', cursive;
+$font_main: "Lato", sans-serif;
+$font_logo: "Permanent Marker", cursive;
 $spacing: 0.1rem;
 
 /*===== main styles =====*/
@@ -115,7 +115,7 @@ select {
 }
 
 .header__link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -8px;
   left: 0;
@@ -451,7 +451,7 @@ select {
   text-align: center;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -2rem;
     left: 50%;
@@ -838,7 +838,7 @@ select {
   // text-align: center;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -2rem;
     left: 0;
@@ -1009,7 +1009,7 @@ select {
 
 .filters__item.shipping {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 
