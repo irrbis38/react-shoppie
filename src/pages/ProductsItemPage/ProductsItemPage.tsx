@@ -1,21 +1,23 @@
+import { Link } from "react-router-dom";
+
 const ProductsItemPage: React.FC = () => {
   return (
     <>
       <section className="navigation">
         <div className="container">
           <h2 className="navigation__link">
-            <a href="/index.html">Home</a>
+            <Link to="/">Home</Link>
             <span>/</span>
-            <a href="/pages/products/products.html">Products</a>
+            <Link to="/products">Products</Link>
             <span>/</span>Product
           </h2>
         </div>
       </section>
       <section className="product">
         <div className="container">
-          <a className="product__back" href="#!">
+          <Link className="product__back" to="/products">
             back to products
-          </a>
+          </Link>
           <div className="product__wrapper">
             <div className="product__carousel">
               <div className="product__img">
@@ -61,11 +63,11 @@ const ProductsItemPage: React.FC = () => {
               <h2 className="product__title">Orange</h2>
               <div className="product__range">
                 <div className="product__stars">
-                  <img src="/assets/icons/star-full.svg" alt="logo" />
-                  <img src="/assets/icons/star-full.svg" alt="logo" />
-                  <img src="/assets/icons/star-full.svg" alt="logo" />
-                  <img src="/assets/icons/star-half.svg" alt="logo" />
-                  <img src="/assets/icons/star-empty.svg" alt="logo" />
+                  <img src="/icons/star-full.svg" alt="logo" />
+                  <img src="/icons/star-full.svg" alt="logo" />
+                  <img src="/icons/star-full.svg" alt="logo" />
+                  <img src="/icons/star-half.svg" alt="logo" />
+                  <img src="/icons/star-empty.svg" alt="logo" />
                 </div>
                 <div className="product__amount">(100 customer reviews)</div>
               </div>
@@ -101,7 +103,7 @@ const ProductsItemPage: React.FC = () => {
                     className="property__color property__color--yellow active"
                     data-color="#ff0000"
                   >
-                    <img src="/assets/icons/check.svg" alt="check" />
+                    <img src="/icons/check.svg" alt="check" />
                   </button>
                 </div>
               </div>

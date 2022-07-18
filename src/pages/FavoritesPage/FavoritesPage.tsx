@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+
 const FavoritesPage = () => {
   return (
     <>
       <section className="navigation">
         <div className="container">
           <h2 className="navigation__link">
-            <a href="/index.html">Home</a>
+            <Link to="/">Home</Link>
             <span>/</span>Favorites
           </h2>
         </div>
@@ -44,12 +46,9 @@ const FavoritesPage = () => {
           </div>
           <div className="favorites__line"></div>
           <div className="favorites__nav">
-            <a
-              href="/pages/products/products.html"
-              className="favorites__continue"
-            >
+            <Link to="/products" className="favorites__continue">
               Continue Shopping
-            </a>
+            </Link>
             <button className="favorites__clear">Clear Favorites List</button>
           </div>
         </div>

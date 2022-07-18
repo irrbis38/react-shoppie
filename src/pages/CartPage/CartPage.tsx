@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 const CartPage: React.FC = () => {
   return (
     <>
       <section className="navigation">
         <div className="container">
           <h2 className="navigation__link">
-            <a href="/index.html">Home</a>
+            <Link to="/">Home</Link>
             <span>/</span>Cart
           </h2>
         </div>
@@ -51,9 +52,9 @@ const CartPage: React.FC = () => {
           </div>
           <div className="cart__line"></div>
           <div className="cart__nav">
-            <a href="/pages/products/products.html" className="cart__continue">
+            <Link to="/products" className="cart__continue">
               Continue Shopping
-            </a>
+            </Link>
             <button className="cart__clear">Clear Shopping Cart</button>
           </div>
           <div className="cart__footer">
@@ -73,9 +74,9 @@ const CartPage: React.FC = () => {
                   <span>$36.33</span>
                 </div>
               </div>
-              <a href="/pages/login/login.html" className="cart__login">
+              <Link to="/login" className="cart__login">
                 LOGIN
-              </a>
+              </Link>
             </div>
           </div>
         </div>

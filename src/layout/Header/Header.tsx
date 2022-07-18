@@ -1,37 +1,41 @@
+import { Link } from "react-router-dom";
+
 const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
-          <a className="header__logo" href="/index.html">Shoppie</a>
+          <Link className="header__logo" to="/">
+            Shoppie
+          </Link>
           <nav className="header__navbar">
             <ul className="header__navigation">
               <li className="header__link">
-                <a href="./index.html">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li className="header__link">
-                <a href="./pages/about/about.html">About</a>
+                <Link to="/about">About</Link>
               </li>
               <li className="header__link">
-                <a href="./pages/products/products.html">Products</a>
+                <Link to="/products">Products</Link>
               </li>
             </ul>
           </nav>
           <div className="header__panel">
             <div className="header__favorites" title="Favorites products">
-              <a href="./pages/favorites/favorites.html">
+              <Link to="/favorites">
                 <i className="material-icons">favorite</i>
-              </a>
+              </Link>
             </div>
-            <a className="header__cart" href="./pages/cart/cart.html">
+            <Link className="header__cart" to="/cart">
               <span>Cart</span>
               <i className="material-icons">shopping_cart</i>
               <span className="header__amount">88</span>
-            </a>
-            <a className="header__loggin"  href="./pages/login/login.html">
+            </Link>
+            <Link className="header__loggin" to="/login">
               <span>LogIn</span>
               <i className="material-icons">person_add</i>
-            </a>
+            </Link>
           </div>
           <div className="header__burger">
             <i className="material-icons">menu</i>
@@ -46,31 +50,31 @@ const Header: React.FC = () => {
             <nav className="burger__navbar">
               <ul className="burger__navigation">
                 <li className="burger__link">
-                  <a href="./index.html">Home</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li className="burger__link">
-                  <a href="./pages/about/about.html">About</a>
+                  <Link to="/about">About</Link>
                 </li>
                 <li className="burger__link">
-                  <a href="./pages/products/products.html">Products</a>
+                  <Link to="/products">Products</Link>
                 </li>
               </ul>
             </nav>
             <div className="burger__panel">
               <div className="burger__favorites">
-                <a href="./pages/favorites/favorites.html">
+                <Link to="/favorites">
                   <i className="material-icons">favorite</i>
-            </a>
+                </Link>
               </div>
-              <a className="burger__cart"  href="./pages/cart/cart.html">
+              <Link className="burger__cart" to="/cart">
                 <span>Cart</span>
                 <i className="material-icons">shopping_cart</i>
                 <span className="burger__amount">88</span>
-              </a>
-              <a className="burger__loggin"  href="./pages/login/login.html">
+              </Link>
+              <Link className="burger__loggin" to="/login">
                 <span>LogIn</span>
                 <i className="material-icons">person_add</i>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
