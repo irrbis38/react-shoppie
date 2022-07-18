@@ -1,35 +1,32 @@
 import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import CardItem from "../../components/CardItem/CardItem";
 import CardItemIcons from "../../components/CardItemIcons/CardItemIcons";
+
+// Убрал стейт ненужный, только вызывал лишние ререндеры
 
 const ProductsPage: React.FC<{ products: Products[] | null }> = ({
   products,
 }) => {
   const [isIconsMode, setIsIconsMode] = useState<boolean>(true);
 
-  const [sortedProducts, setSortedProducts] = useState<Products[] | null>(() =>
-    products ? products.sort((a, b) => a.price - b.price) : []
-  );
   const [sortByDirection, setSortByDirection] =
-    useState<string>("price-lowest");
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [searchedProducts, setSearchedProducts] = useState<Products[] | null>(
-    sortedProducts
+    useState<string>("price-lowest"); // тут бы енам какой нибудь
+  const [searchValue, setSearchValue] = useState(""); // можно не писать string если есть initialValue
+  const [searchedProducts, setSearchedProducts] = useState<Products[] | null>( //не уверен что здесь нужно | null
+    null
   );
 
-  const selectRef = useRef<HTMLSelectElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
+  const sortedByPriceProducts = useCallback(
+    () => (products && products.sort((a, b) => a.price - b.price)) || [],
+    [products]
+  );
+
   useEffect(() => {
-    if (sortByDirection === "price-lowest" && products) {
-      const sProducts = products.sort((a, b) => a.price - b.price);
-      setSortedProducts(sProducts);
-    } else if (sortByDirection === "price-highest" && products) {
-      const sProducts = products.sort((a, b) => b.price - a.price);
-      setSortedProducts(sProducts);
-    }
-  }, [sortByDirection, products]);
+    setSearchedProducts(sortedByPriceProducts);
+  }, [sortedByPriceProducts]);
 
   useEffect(() => {
     if (searchRef && searchRef.current) {
@@ -39,47 +36,42 @@ const ProductsPage: React.FC<{ products: Products[] | null }> = ({
 
   useEffect(() => {
     if (searchValue === "") {
-      setSearchedProducts(sortedProducts);
+      setSearchedProducts(sortedByPriceProducts);
     } else {
-      const sProducts = sortedProducts?.filter((item) =>
+      const sProducts = sortedByPriceProducts()?.filter((item) =>
         item.name.toLowerCase().includes(searchValue.toLowerCase())
       );
       if (sProducts) {
         setSearchedProducts(sProducts);
       }
     }
-  }, [searchValue, sortedProducts]);
+  }, [searchValue, sortedByPriceProducts]);
 
-  const sortByDirectionHandler: selectHandler = () => {
-    if (selectRef && selectRef.current) {
-      setSortByDirection(selectRef.current.value);
-    }
-  };
+  const sortByDirectionHandler = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      if (event.target.value === "price-lowest" && products) {
+        // не очень понятно зачем тут используется products если уже локально есть searchedProducts просто пересортировать тип как ниже написал
+        setSearchedProducts(
+          (prevState) =>
+            prevState && prevState.sort((a, b) => a.price - b.price)
+        );
+      }
+      if (event.target.value === "price-highest" && products) {
+        const sProducts = products.sort((a, b) => b.price - a.price);
+        setSearchedProducts(sProducts);
+      }
+      setSortByDirection(event.target.value);
+    },
+    [products]
+  );
 
   const searchHandler = () => {
+    // опять же не нужен реф тут, в onChange event есть value
     if (searchRef && searchRef.current) {
       setSearchValue(searchRef.current.value);
     }
   };
-
-  const productsList = searchedProducts?.map((product) => (
-    <CardItem
-      key={product.id}
-      name={product.name}
-      price={product.price}
-      imageUrl={product.imagesUrl[0]}
-    />
-  ));
-
-  const productsIcons = searchedProducts?.map((product) => (
-    <CardItemIcons
-      key={product.id}
-      name={product.name}
-      price={product.price}
-      imageUrl={product.imagesUrl[0]}
-    />
-  ));
-
+  // ну и оверолл нужно бы укоротить тут всё, разбить по компонентам, тип aside, topFilter, content и т.д.
   return (
     <>
       <section className="navigation">
@@ -280,8 +272,7 @@ const ProductsPage: React.FC<{ products: Products[] | null }> = ({
                     id="sortby"
                     className="catalog__select"
                     value={sortByDirection}
-                    onChange={sortByDirectionHandler}
-                    ref={selectRef}
+                    onChange={sortByDirectionHandler} // если eventHandler обернуть в useCallback можно избежать постоянной переинициализации функции и просто её вот так кинуть, event приходить будет
                   >
                     <option value="price-lowest">price (lowest)</option>
                     <option value="price-highest">price (highest)</option>
@@ -292,9 +283,31 @@ const ProductsPage: React.FC<{ products: Products[] | null }> = ({
               </div>
 
               {isIconsMode ? (
-                <div className="cards__list list">{productsList}</div>
+                <div className="cards__list list">
+                  {searchedProducts?.map(
+                    (
+                      product // лучше не определять штуки которые могут меняться в константу, либо делать рендер функцией либо вот так
+                    ) => (
+                      <CardItem
+                        key={product.id}
+                        name={product.name}
+                        price={product.price}
+                        imageUrl={product.imagesUrl[0]}
+                      />
+                    )
+                  )}
+                </div>
               ) : (
-                <div className="cards__list icons">{productsIcons}</div>
+                <div className="cards__list icons">
+                  {searchedProducts?.map((product) => (
+                    <CardItemIcons
+                      key={product.id}
+                      name={product.name}
+                      price={product.price}
+                      imageUrl={product.imagesUrl[0]}
+                    />
+                  ))}
+                </div>
               )}
             </section>
           </div>

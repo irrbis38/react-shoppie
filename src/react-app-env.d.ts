@@ -18,4 +18,4 @@ type CardInfo = {
   imageUrl: string;
 };
 
-type selectHandler = (e: React.FormEvent<HTMLSelectElement>) => void;
+type selectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => void;
