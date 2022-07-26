@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
+import Navigation from "../../components/Navigation/Navigation";
 const CartPage: React.FC = () => {
   return (
     <>
-      <section className="navigation">
-        <div className="container">
-          <h2 className="navigation__link">
-            <Link to="/">Home</Link>
-            <span>/</span>Cart
-          </h2>
-        </div>
-      </section>
+      <Navigation pageName="Cart" />
       <section className="cart">
         <div className="container">
           <div className="cart__header">

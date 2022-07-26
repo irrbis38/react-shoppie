@@ -441,25 +441,25 @@ select {
 }
 
 .latest__title {
-  position: relative;
   font-size: 2.5rem;
   line-height: 1;
   letter-spacing: $spacing;
   margin: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
   text-transform: capitalize;
   text-align: center;
+}
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6rem;
-    height: 0.25rem;
-    background-color: $green_darken_3;
-  }
+.latest__line {
+  width: 6rem;
+  height: 0.25rem;
+  margin: 0 auto 3rem;
+  background-color: $green_darken_3;
+}
+
+.nofound__message {
+  margin-top: 3rem;
+  text-align: center;
 }
 
 .cards__list {
@@ -467,7 +467,7 @@ select {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-template-rows: 265px;
   gap: 2.5rem;
-  margin: 6rem auto 4rem;
+  margin: 3rem auto 4rem;
 }
 
 .card__img {
@@ -588,7 +588,7 @@ select {
   align-items: center;
   margin-bottom: 1rem;
 
-  & span {
+  & div {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
@@ -1043,7 +1043,6 @@ select {
 // Catalog Styles
 
 .catalog__panel {
-  margin-bottom: -3rem;
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   gap: 2rem;
@@ -1107,17 +1106,7 @@ select {
 // CATALOG LIST MODE
 /////////////////////////////////////////////////
 
-// .cards__list.icons,
-// .cards__list.list {
-//   display: none;
-// }
-
-// .cards__list.icons.active,
-// .cards__list.list.active {
-//   display: grid;
-// }
-
-.cards__list.icons {
+.cards__list.list {
   grid-template-columns: 1fr;
   grid-template-rows: 216px;
   gap: 3rem;

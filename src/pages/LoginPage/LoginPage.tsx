@@ -1,16 +1,9 @@
-import { Link } from "react-router-dom";
+import Navigation from "../../components/Navigation/Navigation";
 
 const LoginPage = () => {
   return (
     <>
-      <section className="navigation">
-        <div className="container">
-          <h2 className="navigation__link">
-            <Link to="/">Home</Link>
-            <span>/</span>Log In
-          </h2>
-        </div>
-      </section>
+      <Navigation pageName="Log In" />
       <section className="auth">
         <div className="login">
           <h2 className="auth__title">LogIn with email</h2>

@@ -7,7 +7,12 @@ import FavoritesPage from "./../../pages/FavoritesPage/FavoritesPage";
 import LoginPage from "./../../pages/LoginPage/LoginPage";
 import ProductsItemPage from "../../pages/ProductsItemPage/ProductsItemPage";
 
-const Main: React.FC<{ products: Products[] | null }> = ({ products }) => {
+const Main: React.FC<{
+  products: Products[];
+  changeSortType: selectHandler;
+  searchHandler: inputHandler;
+  searchValue: string;
+}> = ({ products, changeSortType, searchHandler, searchValue }) => {
   return (
     <main className="main">
       <Routes>
@@ -15,7 +20,14 @@ const Main: React.FC<{ products: Products[] | null }> = ({ products }) => {
         <Route path="/about" element={<AboutPage />} />
         <Route
           path="/products"
-          element={<ProductsPage products={products} />}
+          element={
+            <ProductsPage
+              products={products}
+              changeSortType={changeSortType}
+              searchHandler={searchHandler}
+              searchValue={searchValue}
+            />
+          }
         />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />

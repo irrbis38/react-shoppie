@@ -1,16 +1,10 @@
 import { Link } from "react-router-dom";
+import Navigation from "../../components/Navigation/Navigation";
 
 const FavoritesPage = () => {
   return (
     <>
-      <section className="navigation">
-        <div className="container">
-          <h2 className="navigation__link">
-            <Link to="/">Home</Link>
-            <span>/</span>Favorites
-          </h2>
-        </div>
-      </section>
+      <Navigation pageName="Favorites" />
       <section className="favorites">
         <div className="container">
           <div className="favorites__header">

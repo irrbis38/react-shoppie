@@ -5,7 +5,10 @@ const Footer: React.FC = () => {
         <div className="footer__wrapper">
           <div className="footer__logo">
             <a href="https://rs.school/js/" target="_blank" rel="noreferrer">
-              <img src="/icons/rsschool.svg" alt="rsschool" />
+              <img
+                src="/react-shoppie/icons/rsschool.svg"
+                alt="rsschool"
+              />
             </a>
           </div>
           <div className="footer__info">
@@ -17,7 +20,10 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="/icons/github.svg" alt="repo" />
+              <img
+                src="/react-shoppie/icons/github.svg"
+                alt="repo"
+              />
             </a>
           </div>
         </div>

@@ -1,16 +1,9 @@
-import { Link } from "react-router-dom";
+import Navigation from "../../components/Navigation/Navigation";
 
 const AboutPage: React.FC = () => {
   return (
     <>
-      <section className="navigation">
-        <div className="container">
-          <h2 className="navigation__link">
-            <Link to="/">Home</Link>
-            <span>/</span>About
-          </h2>
-        </div>
-      </section>
+      <Navigation pageName="About" />
       <section className="history">
         <div className="container">
           <div className="history__wrapper">

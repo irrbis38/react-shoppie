@@ -7,7 +7,10 @@ const CardItem: React.FC<CardInfo> = (props) => {
       <div className="card__img">
         <div className="overlay">
           <Link className="show__more" to="/productsItem">
-            <img src="/icons/showmore.svg" alt="show detais" />
+            <img
+              src="/react-shoppie/icons/showmore.svg"
+              alt="show detais"
+            />
           </Link>
         </div>
         <img src={imageUrl} alt={name} />
