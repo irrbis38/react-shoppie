@@ -1,5 +1,6 @@
-import FilterByCategory from "../../components/FilterByCategory/FilterByCategory";
-import FilterByCountry from "../../components/FilterByCountry/FilterByCountry";
+import FilterByCategory from '../../components/FilterByCategory/FilterByCategory';
+import FilterByCountry from '../../components/FilterByCountry/FilterByCountry';
+import FilterByColor from './../../components/FilterByColor/FilterByColor';
 
 const Filters: React.FC<{
   searchHandler: inputHandler;
@@ -44,64 +45,7 @@ const Filters: React.FC<{
             country={country}
           />
 
-          <div className="filters__item">
-            <h3 className="filters__title">Colors</h3>
-            <div className="filters__colors">
-              <button name="color" data-color="all" className="all__btn active">
-                All
-              </button>
-              <button
-                name="color"
-                className="color__btn color__btn--red"
-                data-color="#ff0000"
-              >
-                <img
-                  src="/react-shoppie/icons/check.svg"
-                  alt="check"
-                />
-              </button>
-              <button
-                name="color"
-                className="color__btn color__btn--green"
-                data-color="#00ff00"
-              >
-                <img
-                  src="/react-shoppie/icons/check.svg"
-                  alt="check"
-                />
-              </button>
-              <button
-                name="color"
-                className="color__btn color__btn--blue"
-                data-color="#0000ff"
-              >
-                <img
-                  src="/react-shoppie/icons/check.svg"
-                  alt="check"
-                />
-              </button>
-              <button
-                name="color"
-                className="color__btn color__btn--black"
-                data-color="#000"
-              >
-                <img
-                  src="/react-shoppie/icons/check.svg"
-                  alt="check"
-                />
-              </button>
-              <button
-                name="color"
-                className="color__btn color__btn--yellow"
-                data-color="#ffb900"
-              >
-                <img
-                  src="/react-shoppie/icons/check.svg"
-                  alt="check"
-                />
-              </button>
-            </div>
-          </div>
+          <FilterByColor />
 
           <div className="filters__item">
             <h3 className="filters__title">Price</h3>
