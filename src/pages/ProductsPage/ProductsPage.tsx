@@ -6,15 +6,20 @@ import Catalog from '../../layout/Catalog/Catalog';
 const getAllFilters = () => {
   let byCountry = localStorage.getItem('filterByCountry');
   let byCategory = localStorage.getItem('filterByCategory');
+  let byColor = localStorage.getItem('filterByColor');
   const filters = {
     category: 'all',
     country: 'all',
+    color: 'all',
   };
   if (byCountry !== null) {
     filters.country = byCountry;
   }
   if (byCategory !== null) {
     filters.category = byCategory;
+  }
+  if (byColor !== null) {
+    filters.color = byColor;
   }
   return filters;
 };
@@ -33,11 +38,18 @@ const filterProducts: DoFiltering = (products) => {
   let filters = getAllFilters();
   for (let key in filters) {
     if (!(filters[key as keyof typeof filters] === 'all')) {
-      newProducts = newProducts.filter(
-        (item) =>
-          item[key as keyof typeof item] ===
-          filters[key as keyof typeof filters]
-      );
+      if (key === 'color') {
+        let chooseColor = filters[key];
+        newProducts = newProducts.filter((item) =>
+          item.color.includes(chooseColor)
+        );
+      } else {
+        newProducts = newProducts.filter(
+          (item) =>
+            item[key as keyof typeof item] ===
+            filters[key as keyof typeof filters]
+        );
+      }
     }
   }
   return newProducts;
@@ -56,6 +68,10 @@ const ProductsPage: React.FC<{
   const [category, setCategory] = useState<string>(() =>
     getActiveFilter('filterByCategory')
   );
+  const [color, setColor] = useState<string>(() =>
+    getActiveFilter('filterByColor')
+  );
+
   const onCategoryChange: clickButtonHandler = (e) => {
     let filterByCategory = e.currentTarget.value;
     setCategory(filterByCategory);
@@ -72,13 +88,26 @@ const ProductsPage: React.FC<{
     setProductsList(newProducts);
   };
 
+  const onColorChange: clickButtonHandler = (e) => {
+    e.preventDefault();
+    if (e.currentTarget.dataset.color) {
+      let filterByColor = e.currentTarget.dataset.color;
+      setColor(filterByColor);
+      localStorage.setItem('filterByColor', filterByColor);
+    }
+    let newProducts = filterProducts(products);
+    setProductsList(newProducts);
+  };
+
   const onClearFilters = () => {
     localStorage.setItem('filterByCountry', 'all');
     localStorage.setItem('filterByCategory', 'all');
+    localStorage.setItem('filterByColor', 'all');
     let newProducts = filterProducts(products);
     setProductsList(newProducts);
     setCategory('all');
     setCountry('all');
+    setColor('all');
   };
 
   useEffect(() => {
@@ -98,8 +127,10 @@ const ProductsPage: React.FC<{
               onCategoryChange={onCategoryChange}
               onCountryChange={onCountryChange}
               onClearFilters={onClearFilters}
+              onColorChange={onColorChange}
               country={country}
               category={category}
+              color={color}
             />
             <Catalog
               products={productsList}

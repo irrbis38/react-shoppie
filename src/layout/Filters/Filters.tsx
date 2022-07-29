@@ -8,16 +8,20 @@ const Filters: React.FC<{
   onCategoryChange: clickButtonHandler;
   onCountryChange: selectHandler;
   onClearFilters: clickButtonHandler;
+  onColorChange: clickButtonHandler;
   country: string;
   category: string;
+  color: string;
 }> = ({
   searchHandler,
   searchValue,
   onCategoryChange,
   onCountryChange,
   onClearFilters,
+  onColorChange,
   country,
   category,
+  color,
 }) => {
   return (
     <aside className="filters">
@@ -45,7 +49,7 @@ const Filters: React.FC<{
             country={country}
           />
 
-          <FilterByColor />
+          <FilterByColor onColorChange={onColorChange} color={color} />
 
           <div className="filters__item">
             <h3 className="filters__title">Price</h3>
