@@ -23,9 +23,9 @@ type SortCategories = {
   isActive: boolean;
 };
 
-type selectHandler = (e: React.FormEvent<HTMLSelectElement>) => void;
+type selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => void;
 
-type inputHandler = (e: React.FormEvent<HTMLInputElement>) => void;
+type inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 type clickButtonHandler = (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>

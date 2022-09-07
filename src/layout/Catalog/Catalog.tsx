@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import CardItem from "../../components/CardItem/CardItem";
 import CardItemIcons from "../../components/CardItemIcons/CardItemIcons";
-import { getTypeOfSort } from "../../App";
+import { getTypeOfSort } from "./../../utils/utils";
 
 const getViewMode = () => {
   let viewMode = localStorage.getItem("catalogMode");
