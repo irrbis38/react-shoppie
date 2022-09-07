@@ -7,9 +7,9 @@ const CheckColorButton: React.FC<{
     <button
       name="color"
       className={
-        color === localStorage.getItem('filterByColor')
-          ? 'color__btn active'
-          : 'color__btn'
+        color === localStorage.getItem("filterByColor")
+          ? "color__btn active"
+          : "color__btn"
       }
       style={{ backgroundColor: btnColor }}
       data-color={btnColor}

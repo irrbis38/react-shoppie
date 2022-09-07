@@ -55,26 +55,11 @@ const ProductsItemPage: React.FC = () => {
               <h2 className="product__title">Orange</h2>
               <div className="product__range">
                 <div className="product__stars">
-                  <img
-                    src="/react-shoppie/icons/star-full.svg"
-                    alt="logo"
-                  />
-                  <img
-                    src="/react-shoppie/icons/star-full.svg"
-                    alt="logo"
-                  />
-                  <img
-                    src="/react-shoppie/icons/star-full.svg"
-                    alt="logo"
-                  />
-                  <img
-                    src="/react-shoppie/icons/star-half.svg"
-                    alt="logo"
-                  />
-                  <img
-                    src="/react-shoppie/icons/star-empty.svg"
-                    alt="logo"
-                  />
+                  <img src="/react-shoppie/icons/star-full.svg" alt="logo" />
+                  <img src="/react-shoppie/icons/star-full.svg" alt="logo" />
+                  <img src="/react-shoppie/icons/star-full.svg" alt="logo" />
+                  <img src="/react-shoppie/icons/star-half.svg" alt="logo" />
+                  <img src="/react-shoppie/icons/star-empty.svg" alt="logo" />
                 </div>
                 <div className="product__amount">(100 customer reviews)</div>
               </div>
@@ -110,10 +95,7 @@ const ProductsItemPage: React.FC = () => {
                     className="property__color property__color--yellow active"
                     data-color="#ff0000"
                   >
-                    <img
-                      src="/react-shoppie/icons/check.svg"
-                      alt="check"
-                    />
+                    <img src="/react-shoppie/icons/check.svg" alt="check" />
                   </button>
                 </div>
               </div>
